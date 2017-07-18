@@ -1,0 +1,35 @@
+{
+  "name": "wordpress-plugin-autoVersion",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artcomventure/wordpress-plugin-autoVersion.git"
+  },
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "del": "^2.2.0",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-gettext": "^0.3.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-uglify": "^3.0.0"
+  },
+  "description": "Auto-versioning CSS and JavaScript files in WordPress, allowing for cache busting when these files are changed.",
+  "bugs": {
+    "url": "https://github.com/artcomventure/wordpress-plugin-autoVersion/issues"
+  },
+  "homepage": "https://github.com/artcomventure/wordpress-plugin-autoVersion#readme",
+  "version": "1.0.0",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Stefan Käsche",
+    "email": "stefan.kaesche@artcom-venture.de",
+    "url": "https://www.artcom-venture.de"
+  }
+}

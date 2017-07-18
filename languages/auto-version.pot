@@ -1,0 +1,49 @@
+# Copyright (C) 2017 artcom venture GmbH
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Auto Version\n"
+"Report-Msgid-Bugs-To: info@artcom-venture.de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: artcom venture GmbH <info@artcom-venture.de>\n"
+"Language-Team: artcom venture GmbH <info@artcom-venture.de>\n"
+"Language: de_DE\n"
+
+msgid '<span class="auto">auto</span> version number <span class="version-number">to %s</span>'
+msgstr ""
+
+msgid "... incl. overriding existing ones."
+msgstr ""
+
+msgid "... but files with exitsting version numbers."
+msgstr ""
+
+msgid "Auto Version"
+msgstr ""
+
+msgid "Auto-Versioning CSS and JavaScript files"
+msgstr ""
+
+msgid "CSS"
+msgstr ""
+
+msgid "Disable"
+msgstr ""
+
+msgid "file's modification timestamp"
+msgstr ""
+
+msgid "Force"
+msgstr ""
+
+msgid "In other words: Cache busting when <i>these</i> files are changed."
+msgstr ""
+
+msgid "JavaScript"
+msgstr ""
+
+msgid "Set"
+msgstr ""
