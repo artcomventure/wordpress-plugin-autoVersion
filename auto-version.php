@@ -56,7 +56,9 @@ function autoversion_scripts() {
 
 			// change version number
 			// to entered version _number_ or to file's modification timestamp
-			$file->ver = $settings[$type]['ver'] === '' ? @filemtime( $home_path . $file->src ) : $settings[$type]['ver'];
+			$file->ver = $settings[$type]['ver'] === ''
+				? @filemtime( $home_path . preg_replace( '/^' . $home_url . '/', '', $file->src ) )
+				: $settings[$type]['ver'];
 		}
 	}
 }
