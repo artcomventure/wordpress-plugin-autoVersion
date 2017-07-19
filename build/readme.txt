@@ -54,6 +54,11 @@ Don't hesitate! [Issues](https://github.com/artcomventure/wordpress-plugin-autoV
 
 == Changelog ==
 
+= 1.1.0 - 2017-07-19 =
+**Added**
+
+* Ignore specific (WP, plugins, themes) files.
+
 = 1.0.1 - 2017-07-18 =
 **Fixed**
 

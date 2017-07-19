@@ -16,10 +16,10 @@ msgid '<span class="auto">auto</span> version number <span class="version-number
 msgstr '<span class="auto">automatische</span> Versionsnummer <span class="version-number">auf %s</span>'
 
 msgid "... incl. overriding existing ones."
-msgstr "... auch für gesetzte Versionsnummern."
+msgstr "... auch für bereits gesetzte Versionsnummern."
 
-msgid "... but files with exitsting version numbers."
-msgstr "... außer Dateien mit bereits gesetzer Versionsnummer."
+msgid "... except files with exitsting version numbers."
+msgstr "... außer Dateien mit vorhandener Versionsnummer."
 
 msgid "Auto-Versioning CSS and JavaScript files"
 msgstr "Auto-Versionierung von CSS- und JavaScript-Dateien"
@@ -31,10 +31,13 @@ msgid "Disable"
 msgstr "Deaktiviere"
 
 msgid "file's modification timestamp"
-msgstr "die Modifikationszeit der Datei"
+msgstr "die Änderungszeit der Datei"
 
 msgid "Force"
 msgstr "Erzwinge"
+
+msgid "Ignore <i>these</i> files"
+msgstr "<i>Diese</i> Dateien ignorieren"
 
 msgid "In other words: Cache busting when <i>these</i> files are changed."
 msgstr "Anders gesagt: Dateien nicht aus dem Browser-Cache nutzen, wenn diese geändert wurden."

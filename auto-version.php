@@ -3,8 +3,8 @@
 /**
  * Plugin Name: Auto Version
  * Plugin URI: https://github.com/artcomventure/wordpress-plugin-autoVersion
- * Description: Auto-versioning CSS and JavaScript files
- * Version: 1.0.1
+ * Description: Auto-Versioning CSS and JavaScript files
+ * Version: 1.1.0
  * Text Domain: autoversion
  * Author: artcom venture GmbH
  * Author URI: http://www.artcom-venture.de/
@@ -34,27 +34,54 @@ function autoversion_scripts() {
 	$home_path = ( function_exists( 'get_home_path' ) ? get_home_path() : $_SERVER['DOCUMENT_ROOT'] );
 	$home_url  = preg_quote( get_home_url(), '/' );
 
+	$wp_plugin_dir = WP_PLUGIN_DIR;
+	$wp_theme_dir = dirname( TEMPLATEPATH );
+
 	$settings = autoversion_get_settings();
 
 	// get all css and js files
-	foreach ( array( 'css' => wp_styles(), 'js' => wp_scripts() ) as $type => $files ) {
+	foreach ( array( 'css' => wp_styles(), 'js' => wp_scripts() ) as $filetype => $files ) {
 		// disabled
-		if ( !$settings[$type]['status'] ) continue;
+		if ( !$settings[$filetype]['status'] ) continue;
 
 		// loop through files
-		foreach ( $files->registered as $file ) {
+		foreach ( $files->registered as $data ) {
 			// no version at all
-			if ( is_null( $file->ver ) ) continue;
+			if ( is_null( $data->ver ) ) continue;
 			// no file source OR is no local file
-			if ( ! is_string( $file->src ) || ! preg_match( '/^(\/|' . $home_url . ')/', $file->src ) ) continue;
+			if ( ! is_string( $data->src ) || ! preg_match( '/^(\/|' . $home_url . ')/', $data->src ) ) continue;
 			// don't override existing version numbers
-			if ( $settings[$type]['status'] == 1 && is_string( $file->ver ) ) continue;
+			if ( $settings[$filetype]['status'] == 1 && is_string( $data->ver ) ) continue;
+
+			// relative path from root
+			$file_src = $home_path . preg_replace( '/^' . $home_url . '/', '', $data->src );
+
+			// loop through files to ignore
+			foreach ( $settings['ignore'] as $type => $list ) {
+				foreach ( array_filter( $list ) as $file => $ignore ) {
+					if ( ( $pattern = dirname( $file ) ) == '.' ) $pattern = $file;
+
+					if ( preg_match( '#^' . ( $type == 'plugins' ? $wp_plugin_dir : ( $type == 'themes' ? $wp_theme_dir : $home_path ) ) . '/(' . $pattern . ')#', $file_src ) ) {
+						$file_src = false;
+						continue;
+					}
+				}
+
+				if ( !$file_src ) continue;
+			}
+
+			if ( !$file_src ) continue;
+
+			$version = $data->ver;
 
 			// change version number
 			// to entered version _number_ or to file's modification timestamp
-			$file->ver = $settings[$type]['ver'] === ''
-				? @filemtime( $home_path . preg_replace( '/^' . $home_url . '/', '', $file->src ) )
-				: $settings[$type]['ver'];
+			$data->ver = $settings[$filetype]['ver'] === ''
+				? @filemtime( $file_src )
+				: $settings[$filetype]['ver'];
+
+			// revert
+			if ( is_null( $data->ver ) ) $data->ver = $version;
 		}
 	}
 }

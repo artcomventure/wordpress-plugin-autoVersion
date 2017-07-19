@@ -29,9 +29,40 @@ function autoversion_settings_page() {
  * @return array
  */
 function autoversion_get_settings() {
-	$settings = get_option( 'autoversion', array() ) + array( 'css' => array(), 'js' => array() );
+	$settings = get_option( 'autoversion', array() ) + array(
+			'css' => array(),
+			'js' => array(),
+			'ignore' => array()
+		);
+
 	$settings['css'] += array( 'status' => 0, 'ver' => '' );
 	$settings['js'] += array( 'status' => 0, 'ver' => '' );
+	$settings['ignore'] += array( 'wordpress' => array(), 'plugins' => array(), 'themes' => array() );
+
+	$reference = array(
+		'wordpress' => array( 'wp-admin' => '', 'wp-includes' => '' ),
+		'plugins' => get_plugins(),
+		'themes' => wp_get_themes()
+	);
+
+	// check if plugins/themes still exists
+	foreach ( $settings['ignore'] as $type => $list ) {
+		foreach ( $list as $file => $data ) {
+			if ( !isset( $reference[$type][$file] ) ) {
+				// remove if not
+				unset( $settings['ignore'][ $type ][ $file ] );
+			}
+		}
+	}
+
+	// fill not ignore ones
+	foreach ( $reference as $type => $list ) {
+		foreach ( $list as $file => $data ) {
+			if ( !isset( $settings['ignore'][$type][$file] ) ) {
+				$settings['ignore'][$type][$file] = 0;
+			}
+		}
+	}
 
 	return $settings;
 }

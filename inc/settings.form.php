@@ -22,7 +22,7 @@
 						<select name="autoversion[<?php echo $type ?>][status]">
 							<option value="0" title=""<?php selected( 0, $settings[$type]['status'] ) ?>><?php _e( 'Disable', 'autoversion' ); ?></option>
 							<option value="1"<?php selected( 1, $settings[$type]['status'] ) ?>
-							        title="<?php _e( '... but files with exitsting version numbers.', 'autoversion' ) ?>">
+							        title="<?php _e( '... except files with exitsting version numbers.', 'autoversion' ) ?>">
 								<?php _e( 'Set', 'autoversion' ); ?>
 							</option>
 							<option value="2"<?php selected( 2, $settings[$type]['status'] ) ?>
@@ -38,6 +38,40 @@
 				</tr>
 
 			<?php endforeach; ?>
+
+			</tbody>
+		</table>
+
+		<table class="form-table">
+			<tbody>
+			<tr valign="top">
+				<th scope="row">
+					<?php _e( 'Ignore <i>these</i> files', 'autoversion' ); ?>:
+				</th>
+				<td>
+					<?php foreach ( array(
+						__( 'WordPress' ) => array( 'wp-admin' => array( 'Name' => '<code>ROOT/wp-admin/*</code>' ), 'wp-includes' => array( 'Name' => '<code>ROOT/wp-includes/*</code>' ) ),
+						'Plugins' => get_plugins(),
+						'Themes' => wp_get_themes()
+					) as $type => $list ) :
+						if ( !count( $list ) ) continue;
+
+						printf( '<h4 style="margin-top: 5px;">%s</h4>', __( $type, 'autoversion' ) ); ?>
+						<ul>
+						<?php foreach ( $list as $file => $data ) : ?>
+							<li>
+								<label style="display: block;">
+									<input type="checkbox" class="regular-checkbox"
+									       name="autoversion[ignore][<?php echo strtolower( $type ) ?>][<?php echo $file ?>]"
+									       value="1"<?php checked( $settings['ignore'][strtolower( $type )][$file] ); ?> />
+									<?php echo $data['Name']; ?>
+								</label>
+							</li>
+						<?php endforeach; ?>
+						</ul>
+					<?php endforeach; ?>
+				</td>
+			</tr>
 
 			</tbody>
 		</table>

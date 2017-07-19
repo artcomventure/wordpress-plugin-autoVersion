@@ -18,7 +18,7 @@ msgstr ""
 msgid "... incl. overriding existing ones."
 msgstr ""
 
-msgid "... but files with exitsting version numbers."
+msgid "... except files with exitsting version numbers."
 msgstr ""
 
 msgid "Auto Version"
@@ -37,6 +37,9 @@ msgid "file's modification timestamp"
 msgstr ""
 
 msgid "Force"
+msgstr ""
+
+msgid "Ignore <i>these</i> files"
 msgstr ""
 
 msgid "In other words: Cache busting when <i>these</i> files are changed."
