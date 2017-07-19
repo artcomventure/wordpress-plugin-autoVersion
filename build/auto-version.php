@@ -3,16 +3,12 @@
 /**
  * Plugin Name: Auto Version
  * Plugin URI: https://github.com/artcomventure/wordpress-plugin-autoVersion
- * Description: Auto-versioning CSS and JavaScript files in WordPress.
- * Version: 1.0.0
+ * Description: Auto-versioning CSS and JavaScript files
+ * Version: 1.0.1
  * Text Domain: autoversion
  * Author: artcom venture GmbH
  * Author URI: http://www.artcom-venture.de/
  */
-
-if ( ! defined( 'AUTOVERSION_PLUGIN_FILE' ) ) {
-	define( 'AUTOVERSION_PLUGIN_FILE', __FILE__ );
-}
 
 if ( ! defined( 'AUTOVERSION_PLUGIN_URL' ) ) {
 	define( 'AUTOVERSION_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -64,7 +60,45 @@ function autoversion_scripts() {
 }
 
 /**
+ * Remove update notification (since this plugin isn't listed on https://wordpress.org/plugins/).
+ */
+add_filter( 'site_transient_update_plugins', 'autoversion__site_transient_update_plugins' );
+function autoversion__site_transient_update_plugins( $value ) {
+	$plugin_file = plugin_basename( __FILE__ );
+
+	if ( isset( $value->response[ $plugin_file ] ) ) {
+		unset( $value->response[ $plugin_file ] );
+	}
+
+	return $value;
+}
+
+/**
+ * Change details link to GitHub repository.
+ */
+add_filter( 'plugin_row_meta', 'autoversion__plugin_row_meta', 10, 2 );
+function autoversion__plugin_row_meta( $links, $file ) {
+	if ( plugin_basename( __FILE__ ) == $file ) {
+		$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $file );
+
+		$links[2] = '<a href="' . $plugin_data['PluginURI'] . '">' . __( 'Visit plugin site' ) . '</a>';
+
+		$links[] = '<a href="' . admin_url( 'options-general.php?page=autoversion-settings' ) . '">' . __( 'Settings' ) . '</a>';
+	}
+
+	return $links;
+}
+
+/**
  * Includes.
  */
 
 include( AUTOVERSION_PLUGIN_DIR . 'inc/settings.php' );
+
+/**
+ * Delete traces on deactivation.
+ */
+register_deactivation_hook( __FILE__, 'autoversion_deactivate' );
+function autoversion_deactivate() {
+	delete_option( 'autoversion' );
+}
